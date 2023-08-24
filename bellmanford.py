@@ -15,7 +15,7 @@ box = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 joints = {}
 costMap = {}
 distanceMap = {
-    'A':0, # The setting the source node to 0
+    'A':0, 
 }
 
 
