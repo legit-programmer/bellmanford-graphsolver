@@ -1,4 +1,6 @@
 from colorama import Fore, Style
+import networkx as net
+import matplotlib.pyplot as plt
 
 welcome = """----------------------------------
 Make sure you properly read the instructions and provide the input.
@@ -53,6 +55,18 @@ def relax():
             distanceMap[j] = distanceMap[i] + costMap[i][joints[i].index(j)]
 
 
+def createGraph():
+    G = net.DiGraph(directed=True)
+    for i in distanceMap:
+        G.add_node(i)
+    print(joints)
+    for u in joints:
+        for v in joints[u]:
+            G.add_edge(u, v)
+    
+    pos = net.circular_layout(G)
+    net.draw(G, pos, with_labels=True)
+    plt.show()
 
 def main():
     
@@ -64,6 +78,7 @@ def main():
         relax()
 
     print(distanceMap)
+    createGraph()
 
 
 
