@@ -57,15 +57,28 @@ def relax():
 
 def createGraph():
     G = net.DiGraph(directed=True)
+
     for i in distanceMap:
-        G.add_node(i)
-    print(joints)
+        G.add_node(i, weight=distanceMap[i])
+
     for u in joints:
         for v in joints[u]:
-            G.add_edge(u, v)
+            costIndex:list = joints[u]
+            G.add_edge(u, v, weight = costMap[u][costIndex.index(v)])
     
     pos = net.circular_layout(G)
     net.draw(G, pos, with_labels=True)
+
+    print(G.edges(data=True))
+
+    edge_labels = {(u, v):d['weight'] for u,v,d in G.edges(data=True)}
+    net.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8)
+
+    fig = plt.gcf()
+    dpi = fig.dpi
+    width, height = fig.get_size_inches()
+
+    plt.text(-0.5, -1, distanceMap, fontsize=12, ha='center', va='center')
     plt.show()
 
 def main():
